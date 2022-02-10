@@ -8,7 +8,7 @@ from flask_jwt_extended import jwt_required
 import time
 from .__init__ import db
 
-class _localuser(AnonymousUserMixin, UserMixin,db.Model):
+class _localuser(db.Model,UserMixin):
     __tablename__ = '_localuser'
     id       = db.Column(db.Integer(), primary_key=True)
     email    = db.Column(db.String(), nullable=False)

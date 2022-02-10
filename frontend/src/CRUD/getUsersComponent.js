@@ -7,7 +7,7 @@ function GetUser(){
     axios(
         {
         method:'GET',
-        'url': 'http://127.0.0.1:5000/session',
+        'url': 'http://127.0.0.1:5000/get_user',
         mode: 'cors',
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin',
@@ -17,7 +17,7 @@ function GetUser(){
         },
     }).then(response=>{
         // alert(JSON.stringify(response.data))
-        setUser(response.data)
+        setUser(JSON.stringify(response.data))
     })
     const token = sessionStorage.getItem('token')
     const history = useHistory()

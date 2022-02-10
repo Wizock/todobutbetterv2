@@ -52,8 +52,11 @@ def login_route():
         currentUser = _localuser.query.filter_by(username=queried_username).first()
         if currentUser and currentUser.verify_password(queried_password):
             set_user_session(currentUser)
-            login_user(currentUser)
-            print(current_user)   
+            login_user(currentUser, force=True)
+            print(current_user.id)
+            print(current_user.email)   
+            print(current_user.username)   
+
             if currentUser.is_authenticated:
                 access_token = create_access_token(identity=queried_username, fresh=True)
                 return jsonify({"msg": "logged in","access_token":access_token} ), 200
@@ -77,16 +80,13 @@ def check_session():
             'username': "",
             'email' : "",
         }
-    return {
-        'authenticated': current_user.is_authenticated, 
-        'user': user_sess
-    }
+    return str(current_user.is_authenticated)
 
 
 @auth.route('/get_user', methods=['POST','OPTIONS','GET'])
 @cross_origin(origin='*',headers=['Content-Type','application/json'])
 def fetch_user():
-    return str(current_user.username)
+    return str(session['user'])
 
 @auth.route('/logout')
 def logout():
