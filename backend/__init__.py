@@ -40,6 +40,8 @@ with app.app_context():
     db = SQLAlchemy(app)
     jwt = JWTManager(app)
     from backend.models import _localuser
+    from backend.API.login import *
+    login_manager.init_app(app)
     guard = flask_praetorian.Praetorian(app, _localuser)
     db.create_all()
     

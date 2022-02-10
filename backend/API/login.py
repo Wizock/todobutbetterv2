@@ -3,7 +3,7 @@ from backend import *
 import os, json, sys
 
 
-login_manager = LoginManager(app)
+login_manager = LoginManager()
 
 login_manager.login_view = "authentication.login_route"
 

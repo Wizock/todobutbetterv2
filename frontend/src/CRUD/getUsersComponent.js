@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useHistory } from 'react-router-dom';
 const axios = require("axios");
 
 function GetUser(){
@@ -6,7 +7,7 @@ function GetUser(){
     axios(
         {
         method:'GET',
-        'url': 'http://127.0.0.1:5000/get_user',
+        'url': 'http://127.0.0.1:5000/session',
         mode: 'cors',
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin',
@@ -15,12 +16,14 @@ function GetUser(){
             'Content-Type': 'application/json',
         },
     }).then(response=>{
-        alert(JSON.stringify(response.data))
+        // alert(JSON.stringify(response.data))
         setUser(response.data)
     })
+    const token = sessionStorage.getItem('token')
+    const history = useHistory()
     return (
         <div>
-            {user}
+            { (token && token !== "" && token !== undefined) ? history.push('/login') :(user)}
         </div>
     )
 }
