@@ -11,15 +11,14 @@ from datetime import timedelta
 from flask_jwt_extended import JWTManager
 from secrets import token_urlsafe
 from random import randint
+
 def create_app():
-    secret_len = randint(50, 100)
     appvar = Flask(__name__)
-    appvar.secret_key = str(token_urlsafe(secret_len))
+    appvar.secret_key = r"33pay9V7FYhHGpZOO_-KOOTS6saVUI-Si6tZKPQiuSvQk8Y9CBt8yatkIgNd1CkW2_tukyn6VfdNba67_h0PgO0vbvk2A2BSlPE6K1c4OFM_cPwHCIH_7HxI_MqUbBpVuds9dVHAfxH-fzGXo_rc-B7KJNciaI6H3ktNB_Zn_Xw"
     appvar.register_blueprint(auth)
     appvar.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/todobutbetter.sqlite3'
     appvar.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-    secret_len = randint(50, 100)
-    appvar.config["JWT_SECRET_KEY"] = str(token_urlsafe(secret_len))
+    appvar.config["JWT_SECRET_KEY"] = str(r"mIckCdpWcu75jCe6db8qLV9glgNVeoxQVKaFoZKtgE9AQwGEjHTsQZJkCWLnvs4JZzock_Gu4-1pqXCBlSVRr_pfIn64YhYShAGIidVwW-XOrYv3L9SYjnaBUl0CGq9zDKZLN1jrxQdgvW3JrRjTOD2BvvhQv31SvCjtBEC2vgw")
     CORS(appvar, resources={
         r'/*': {
             'origins': '*',
@@ -35,10 +34,9 @@ def create_app():
     return appvar
 
 app = create_app()
-cors = flask_cors.CORS()
 with app.app_context():
     oauth = OAuth(app)
-    cors = flask_cors.CORS()
+    cors = flask_cors.CORS(app)
     db = SQLAlchemy(app)
     jwt = JWTManager(app)
     from backend.models import _localuser

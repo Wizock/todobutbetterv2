@@ -4,11 +4,14 @@ import {
 import LoginPage from './auth/login'
 import RegisterPage from './auth/register';
 import Navbar from './CRUD/navbarComponent';
+import GetUser from './CRUD/getUsersComponent';
+
 
 function Homepage (){
     let Login = <LoginPage />
     let Register = <RegisterPage />
     let Navbar_ = <Navbar />
+    let GettingUsers = <GetUser />
     return (
         <div>
             <Router>
@@ -16,6 +19,8 @@ function Homepage (){
                 <Link to="/login"></Link>
                 <Link to="/register"></Link>
                 <Link to="/nav"></Link>
+                <Link to="/users"></Link>
+
 
                 <Switch>
                     <Route path="/login">
@@ -26,6 +31,9 @@ function Homepage (){
                     </Route>
                     <Route path="/nav">
                         {Navbar_}
+                    </Route>
+                    <Route path="/users">
+                        {GettingUsers}
                     </Route>
                 </Switch>
             </Router>

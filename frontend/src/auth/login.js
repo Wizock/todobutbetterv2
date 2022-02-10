@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import { useHistory } from 'react-router-dom';
+
 const axios = require("axios");
 
 
@@ -6,6 +8,7 @@ function Tlogin() {
     const [username, setUsername] = useState(0);
     const [password, setPassword] = useState(0);
     const token = sessionStorage.getItem('token')
+    const history = useHistory();
     
     const handleSubmit = () => {
         axios(
@@ -32,7 +35,7 @@ function Tlogin() {
     })}
     return (
         <div>
-            {(token && token !== "" && token !== undefined) ? "you are logged in with this token: "+ token : (
+            {(token && token !== "" && token !== undefined) ? history.push('/users') : (
             <main>
                 <section className="absolute w-full h-full">
                     <div

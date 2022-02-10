@@ -3,6 +3,8 @@ from authlib.integrations.sqla_oauth2 import OAuth2TokenMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin, AnonymousUserMixin
 from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 import time
 from .__init__ import db
 
@@ -17,17 +19,16 @@ class _localuser(AnonymousUserMixin, UserMixin,db.Model):
     is_active = False
     is_anonymous = False
 
+    def __init__(self,email,username,password): 
+        self.email = email
+        self.username = username
+        self.password = generate_password_hash(password)
+    
     def get_id(self):
         return self.id
         
     def is_authenticated(self):
         return self.authenticated
-
-    def __init__(self,email,username,password): 
-        self.email = email
-        self.username = username
-        self.password = generate_password_hash(password)
-
         
     def verify_password(self, pwd):
         return check_password_hash(self.password, pwd)
@@ -35,14 +36,24 @@ class _localuser(AnonymousUserMixin, UserMixin,db.Model):
     @classmethod
     def lookup(cls, username):
         return cls.query.filter_by(username=username).one_or_none()
+    
+    # @jwt_required
+    # def get(cls):       
+    #     user_id = get_jwt_identity()
+    #     return print(user_id)
+
     @classmethod
     def identify(cls, id):
         return cls.query.get(id)
+
     @property
     def identity(self):
         return self.id
+
     def is_valid(self):
         return self.is_active
+    
+
 
 
 class task_dispatch(db.Model):
