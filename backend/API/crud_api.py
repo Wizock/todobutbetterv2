@@ -1,10 +1,13 @@
 
-from flask import Blueprint, request, jsonify, redirect, session
+from calendar import c
+import time
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
+from flask_login import login_required, current_user, login_user, logout_user
 from werkzeug.utils import redirect
 from flask_cors import cross_origin
-import flask_praetorian, time
+import flask_praetorian
+crud = Blueprint('crud_api', __name__)
 
-crud = Blueprint('crud_routes', __name__)
 from backend.__init__ import db
 from backend.models import task_dispatch
 
@@ -31,3 +34,7 @@ def create_task():
         tasks = task_dispatch.query.filter_by(username=flask_praetorian.current_user().username)
         tasks.headers.add('Access-Control-Allow-Origin', '*')
         return  jsonify({'elements': tasks})
+        
+@crud.route('/test')
+def tester():
+    return "hello ", 200

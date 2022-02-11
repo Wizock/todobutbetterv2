@@ -22,7 +22,7 @@ function Homepage (){
                 <Link to="/register"></Link>
                 <Link to="/nav"></Link>
                 <Link to="/users"></Link>
-                <Link to="/main"></Link>
+                <Link to="/crudRoute"></Link>
 
                 <Switch>
                     <Route path="/login">

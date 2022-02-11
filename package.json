@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "run-front": "cd frontend && npm start",
     "run-back": "python wsgi.py"
-
   },
   "keywords": [
     "ai"
@@ -15,6 +14,9 @@
   "author": "Rohaan Ahmed",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.24.0"
+    "@appbaseio/reactivesearch": "^3.28.0",
+    "@popperjs/core": "^2.11.2",
+    "axios": "^0.24.0",
+    "tw-elements": "^1.0.0-alpha10"
   }
 }

@@ -1,9 +1,8 @@
+
 from authlib.integrations.flask_client import OAuth
 from flask_login.login_manager import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from backend.API.auth_api import auth
-from backend.API.crud_api import crud
-
 from datetime import timedelta
 from flask_cors import CORS
 import flask_cors
@@ -18,7 +17,6 @@ def create_app():
     appvar = Flask(__name__)
     appvar.secret_key = r"33pay9V7FYhHGpZOO_-KOOTS6saVUI-Si6tZKPQiuSvQk8Y9CBt8yatkIgNd1CkW2_tukyn6VfdNba67_h0PgO0vbvk2A2BSlPE6K1c4OFM_cPwHCIH_7HxI_MqUbBpVuds9dVHAfxH-fzGXo_rc-B7KJNciaI6H3ktNB_Zn_Xw"
     appvar.register_blueprint(auth)
-    appvar.register_blueprint(crud)
     appvar.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/todobutbetter.sqlite3'
     appvar.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     appvar.config["JWT_SECRET_KEY"] = str(r"mIckCdpWcu75jCe6db8qLV9glgNVeoxQVKaFoZKtgE9AQwGEjHTsQZJkCWLnvs4JZzock_Gu4-1pqXCBlSVRr_pfIn64YhYShAGIidVwW-XOrYv3L9SYjnaBUl0CGq9zDKZLN1jrxQdgvW3JrRjTOD2BvvhQv31SvCjtBEC2vgw")
@@ -38,13 +36,12 @@ def create_app():
 
 app = create_app()
 with app.app_context():
-    db = SQLAlchemy(app)    
     oauth = OAuth(app)
     cors = flask_cors.CORS(app)
     guard = flask_praetorian.Praetorian()
-    jwt = JWTManager(app)
+    db = SQLAlchemy(app)
     from backend.models import _localuser
+    jwt = JWTManager(app)
     guard.init_app(app, _localuser)
     db.create_all()
-    
 
