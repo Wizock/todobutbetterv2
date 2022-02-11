@@ -2,8 +2,11 @@ from backend.models import _googleAuthUser, _localuser
 from backend import *
 import os, json, sys
 
+print('power')
 
 login_manager = LoginManager()
+
+login_manager.init_app(app)
 
 login_manager.login_view = "authentication.login_route"
 

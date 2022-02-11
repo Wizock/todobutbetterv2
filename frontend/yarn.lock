@@ -7953,6 +7953,11 @@
   optionalDependencies:
     "fsevents" "^2.3.2"
 
+"react-token-auth@^2.3.8":
+  "integrity" "sha512-sRy4xpPY0NgTXL/kwQ0LqUZpHiurLG/4lSr9MAVPAuvN/hnjQqAcszl+c869ZO6Pegj2/OEP0MDmvMBJv1SkHQ=="
+  "resolved" "https://registry.npmjs.org/react-token-auth/-/react-token-auth-2.3.8.tgz"
+  "version" "2.3.8"
+
 "react-transition-group@^4.4.1":
   "integrity" "sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg=="
   "resolved" "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.2.tgz"
