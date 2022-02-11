@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { login, authFetch, useAuth, logout } from "./index";
 const axios = require("axios");
 
 function Tlogin() {
 	const [username, setUsername] = useState(0);
 	const [password, setPassword] = useState(0);
-	const token = localStorage.setItem("token");
+	const token = localStorage.getItem("token");
 	const history = useHistory();
 
 	const handleSubmit = () => {
@@ -18,7 +17,7 @@ function Tlogin() {
 				password: password,
 			}),
 			mode: "cors",
-			cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+			cache: "force-cache", // *default, no-cache, reload, force-cache, only-if-cached
 			credentials: "same-origin",
 			"Access-Control-Allow-Origin": "*", // include, *same-origin, omit
 			headers: {
@@ -32,7 +31,6 @@ function Tlogin() {
 			})
 			.then((token) => {
 				if (token.access_token) {
-					login(token);
 					alert(token);
 				} else {
 					console.log("it didnt work");

@@ -5,11 +5,9 @@ from werkzeug.utils import redirect
 from flask_cors import cross_origin
 import flask_praetorian
 auth = Blueprint('authentication', __name__)
-from backend.__init__ import db, oauth, guard
+
+from backend.__init__ import db, guard
 from backend.models import _localuser
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
 
 
 @auth.before_request

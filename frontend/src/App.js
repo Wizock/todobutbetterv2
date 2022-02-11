@@ -5,6 +5,7 @@ import LoginPage from './auth/login'
 import RegisterPage from './auth/register';
 import Navbar from './CRUD/navbarComponent';
 import GetUser from './CRUD/getUsersComponent';
+import CreateTodo from './CRUD/createTodo';
 
 
 function Homepage (){
@@ -12,6 +13,7 @@ function Homepage (){
     let Register = <RegisterPage />
     let Navbar_ = <Navbar />
     let GettingUsers = <GetUser />
+    let CrudRoute = <CreateTodo />
     return (
         <div>
             <Router>
@@ -20,7 +22,7 @@ function Homepage (){
                 <Link to="/register"></Link>
                 <Link to="/nav"></Link>
                 <Link to="/users"></Link>
-
+                <Link to="/main"></Link>
 
                 <Switch>
                     <Route path="/login">
@@ -34,6 +36,9 @@ function Homepage (){
                     </Route>
                     <Route path="/users">
                         {GettingUsers}
+                    </Route>
+                    <Route path="/crudRoute">
+                        {CrudRoute}
                     </Route>
                 </Switch>
             </Router>
