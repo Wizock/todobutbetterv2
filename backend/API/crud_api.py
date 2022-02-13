@@ -11,7 +11,7 @@ crud = Blueprint('crud_api', __name__)
 from backend.__init__ import db
 from backend.models import task_dispatch
 
-@crud.route('/create_task',methods=['POST','OPTIONS','GET'])
+@crud.route('/task/create',methods=['POST','OPTIONS','GET'])
 @flask_praetorian.auth_required
 @cross_origin()
 def create_task():
@@ -30,11 +30,11 @@ def create_task():
         data.headers.add('Access-Control-Allow-Origin', '*')
         return 200
 
+@crud.route('/task/show',methods=['POST','OPTIONS','GET'])
+@flask_praetorian.auth_required
+@cross_origin()
+def create_task():
     if request.method=="GET":
         tasks = task_dispatch.query.filter_by(username=flask_praetorian.current_user().username)
         tasks.headers.add('Access-Control-Allow-Origin', '*')
         return  jsonify({'elements': tasks})
-        
-@crud.route('/test')
-def tester():
-    return "hello ", 200

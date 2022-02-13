@@ -1,34 +1,32 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Navbar from "./navbarComponent";
-// import { DatePicker } from '@appbaseio/reactivesearch';
 
 const axios = require("axios");
 
 
-// function updateCurrentState() {
-// 	const token = localStorage.getItem("token");
+function updateCurrentState() {
+	const token = localStorage.getItem("token");
 
-// 	axios({
-// 		method: "GET",
-// 		url: "http://127.0.0.1:5000/get_user",
-// 		mode: "cors",
-// 		cache: "force-cache", // *default, no-cache, reload, force-cache, only-if-cached
-// 		credentials: "same-origin",
-// 		"Access-Control-Allow-Origin": "*", // include, *same-origin, omit
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			Authorization: `Bearer ${token}`,
-// 		},
-// 	}).then((response) => {
-// 		console.log();
-// 	});
-// }
+	axios({
+		method: "GET",
+		url: "http://127.0.0.1:5000/task/create",
+		mode: "cors",
+		cache: "force-cache", // *default, no-cache, reload, force-cache, only-if-cached
+		credentials: "same-origin",
+		"Access-Control-Allow-Origin": "*", // include, *same-origin, omit
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	}).then((response) => {
+		console.log();
+	});
+}
 
 function CreateTodo() {
 	const token = localStorage.getItem("token");
 	const history = useHistory();
-
 	return (
 		<div>
 			{token && token !== "" && token !== undefined ? (
@@ -61,7 +59,6 @@ function CreateTodo() {
 												<label for="floatingInput" class="text-gray-700">Select a date</label>
 											</div>
 										</div>
-										{/* <DatePicker componentId="DateSensor" dataField="mtime" /> */}
 									</div>
 								</div>
 								due_time urgency
