@@ -74,7 +74,7 @@ Forking is more than reccomended and motivated.
 TODO
 
 - need to make creation system
-
+- research safe token storage
 - need to make update system
 
 - implement css flex
@@ -82,3 +82,4 @@ TODO
 - implement drag and drop
 
 - need to figure state storage
+    - use redux
