@@ -30,10 +30,10 @@ def create_task():
         data.headers.add('Access-Control-Allow-Origin', '*')
         return 200
 
-@crud.route('/task/show',methods=['POST','OPTIONS','GET'])
+@crud.route('/task/show',methods=['GET','OPTIONS'])
 @flask_praetorian.auth_required
 @cross_origin()
-def create_task():
+def show_task():
     if request.method=="GET":
         tasks = task_dispatch.query.filter_by(username=flask_praetorian.current_user().username)
         tasks.headers.add('Access-Control-Allow-Origin', '*')
