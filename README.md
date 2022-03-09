@@ -82,4 +82,3 @@ TODO
 - implement drag and drop
 
 - need to figure state storage
-    - use redux
