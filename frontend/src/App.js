@@ -1,6 +1,6 @@
 import React from 'react';
-import {
-    BrowserRouter as Router, Switch,Route,Link} from "react-router-dom";
+import {BrowserRouter as Router, Switch,Route,Link, useHistory} from "react-router-dom";
+
 import LoginPage from './auth/login'
 import RegisterPage from './auth/register';
 import Navbar from './CRUD/navbarComponent';
@@ -45,13 +45,27 @@ function Homepage (){
         </div>
     )
 }
+function routeControllerLoginRequired(){
+    const token = localStorage.getItem("token");
+	// const external_controller = useHistory();
+    let routes_controller = <Homepage />
+
+    if (token && token !== "" && token !== undefined) {
+        return (<CreateTodo />)
+    }
+    else {
+        return (<LoginPage />)
+    }
+}
 
 function App() {
     return (
     <div className="App">
-        <Homepage />
+        {routeControllerLoginRequired()}
+        
     </div>
     );
 }
 
 export default App;
+

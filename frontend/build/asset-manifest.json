@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.be184708.css",
+    "main.js": "/static/js/main.9495b45e.js",
+    "static/js/787.d8c6ec95.chunk.js": "/static/js/787.d8c6ec95.chunk.js",
+    "static/media/register_bg_2.png": "/static/media/register_bg_2.4f2cb0ac523768c8c77b.png",
+    "static/media/todobutbetter-trans.png": "/static/media/todobutbetter-trans.50aa724c1e8eec8968f3.png",
+    "static/media/google.svg": "/static/media/google.eae9aa9354350126d1b032847835a051.svg",
+    "static/media/github.svg": "/static/media/github.6c95555646a0ecabf549179c97bf0e7d.svg",
+    "index.html": "/index.html",
+    "main.be184708.css.map": "/static/css/main.be184708.css.map",
+    "main.9495b45e.js.map": "/static/js/main.9495b45e.js.map",
+    "787.d8c6ec95.chunk.js.map": "/static/js/787.d8c6ec95.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.be184708.css",
+    "static/js/main.9495b45e.js"
+  ]
+}

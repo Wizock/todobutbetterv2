@@ -1,48 +1,13 @@
 import React, {forwardRef, useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import Navbar from "./navbarComponent";
-import DatePicker, {CalendarContainer} from "react-datepicker";
-import {ChevronLeftIcon, ChevronRightIcon} from "@heroicons/react/solid";
-import {format} from "date-fns";
 
 import "react-datepicker/dist/react-datepicker.css";
 const axios = require("axios");
 
-const ButtonInput = forwardRef(({value, onClick}, ref) => (
-	<button
-		onClick={onClick}
-		ref={ref}
-		type="button"
-		className="inline-flex justify-start w-full px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500">
-		{format(new Date(value), "dd MMMM yyyy")}
-	</button>
-));
-
 function CreateTodo() {
 	const token = localStorage.getItem("token");
 	const history = useHistory();
-	const [startDate, setStartDate] = useState(new Date())
-    const [endDate, setEndDate] = useState(new Date().setMonth(startDate.getMonth() + 1))
-
-    useEffect(() => {
-        if (startDate > endDate) setStartDate(endDate)
-    }, [endDate])
-
-    useEffect(() => {
-        if (startDate > endDate) setEndDate(startDate)
-    }, [startDate])
-
-	const [dueDateStart, setDueDateStart] = useState(new Date(startDate.getDate));
-	const [dueDateEnd, setDueDateEnd] = useState(new Date().setMonth(dueDateStart.getMonth() + 1))
-
-	useEffect(() => {
-		if (dueDateStart > dueDateEnd) setDueDateStart(dueDateStart);
-	}, [dueDateStart]);
-
-	useEffect(() => {
-		if (dueDateStart > dueDateEnd) setDueDateEnd(dueDateEnd);
-	}, [dueDateEnd]);
-
 
 	return (
 		<div>
@@ -65,56 +30,12 @@ function CreateTodo() {
 										</div>
 										<div className="flex items-center justify-center">
 											<div className="datepicker relative form-floating mb-3 xl:w-96" data-mdb-toggle-button="false">
-												<DatePicker selected={startDate} onChange={(date) => setStartDate(date)} selectsStart startDate={startDate} endDate={endDate} nextMonthButtonLabel=">" nextYearButtonLabel=">" previousMonthButtonLabel="<" popperClassName="react-datepicker-right" customInput={<ButtonInput /> }
-													renderCustomHeader={({ date, decreaseMonth, increaseMonth, prevMonthButtonDisabled,nextMonthButtonDisabled,}) => (
-														<div className="flex items-center justify-between px-2 py-2">
-															<span className="text-lg text-gray-700">
-																{format( date, "MMMM yyyy")}
-															</span>
-															<div className="space-x-2">
-																<button onClick={ decreaseMonth }
-																	disabled={ prevMonthButtonDisabled }
-																	type="button" className={`${ prevMonthButtonDisabled && "cursor-not-allowed opacity-50"} inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500 `}>
-																	<ChevronLeftIcon className="w-5 h-5 text-gray-600" />
-																</button>
-																<button
-																	onClick={ increaseMonth }
-																	disabled={ nextMonthButtonDisabled}
-																	type="button" className={` ${ nextMonthButtonDisabled && "cursor-not-allowed opacity-50" } inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500`}>
-																	<ChevronRightIcon className="w-5 h-5 text-gray-600" />
-																</button>
-															</div>
-														</div>
-													)}
-												/>
 											</div>
 										</div>
 										<div className="flex items-center justify-center">
 											<div className="datepicker relative form-floating mb-3 xl:w-96" data-mdb-toggle-button="false">
-										<DatePicker selected={dueDateStart} onChange={(date) => setStartDate(date)} selectsStart startDate={dueDateStart} endDate={dueDateEnd} nextMonthButtonLabel=">" nextYearButtonLabel=">" previousMonthButtonLabel="<" popperClassName="react-datepicker-right" customInput={<ButtonInput /> }
-													renderCustomHeader={({ date, decreaseMonth, increaseMonth, prevMonthButtonDisabled,nextMonthButtonDisabled,}) => (
-														<div className="flex items-center justify-between px-2 py-2">
-															<span className="text-lg text-gray-700">
-																{format( date, "MMMM yyyy")}
-															</span>
-															<div className="space-x-2">
-																<button onClick={ decreaseMonth }
-																	disabled={ prevMonthButtonDisabled }
-																	type="button" className={`${ prevMonthButtonDisabled && "cursor-not-allowed opacity-50"} inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500 `}>
-																	<ChevronLeftIcon className="w-5 h-5 text-gray-600" />
-																</button>
-																<button
-																	onClick={ increaseMonth }
-																	disabled={ nextMonthButtonDisabled}
-																	type="button" className={` ${ nextMonthButtonDisabled && "cursor-not-allowed opacity-50" } inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-green-500`}>
-																	<ChevronRightIcon className="w-5 h-5 text-gray-600" />
-																</button>
-															</div>
-														</div>
-													)}
-												/>
-												</div>
-												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
