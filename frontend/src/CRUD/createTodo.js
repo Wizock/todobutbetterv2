@@ -14,8 +14,7 @@ import TimePicker from '@mui/lab/TimePicker';
 const axios = require("axios");
 
 function CreateTodo() {
-	//get todays date
-
+	let phaseCounter = 1;
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [priority, setPriority] = useState("");
@@ -27,47 +26,109 @@ function CreateTodo() {
 	const [startingDateValue, setStartingDateValue] = useState(new Date());
 	const [dueDateValue, setDueDateValue]           = useState(new Date());
 	const [dueTimeValue, setDueTimeValue]           = useState(0);
+	const [phaseState, setPhaseState ] = useState(phaseCounter);
+	
+	const FirstPhase = () => {
+		return (
+			<div>
+			<div className=" flex content-center items-center justify-center h-full flex justify-center ">
+					<div className=" block p-6 rounded-lg shadow-lg bg-white max-w-sm w-full lg:w-4/10 px-4 ">
+						<h5 className="text-gray-900 text-xl leading-tight font-medium mb-2 w-full lg:w-4/10 px-4"> Card title </h5>
+						<div className="text-gray-700 text-base mb-4">
+							<div className="flex justify-center">
+								<div className="w-full lg:w-4/10 px-4">
+									<div className="mt-3 flex items-center justify-center">
+										<Stack spacing={3}>
+											<TextField id="outlined-basic" label="Task Title" variant="outlined" />
 
+											<LocalizationProvider dateAdapter={AdapterDateFns}>
+												<DatePicker label="Initial Date" value={startingDateValue} onChange={(newValue) => {setStartingDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
+												<DatePicker label="Due Date" value={dueDateValue} onChange={(newValue) => {setDueDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
+												<TimePicker label="Time Due" value={dueTimeValue} onChange={(newValue) => { setDueTimeValue(newValue); }} renderInput={(params) => <TextField {...params} />}/>
+											</LocalizationProvider>
+										</Stack>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button onClick={()=>{
+							if (phaseCounter >= 2) {
+								phaseCounter = 0;
+							}
+							phaseCounter++
+							setPhaseState(phaseCounter)
+						}} type="button"
+							className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+							next
+						</button>
+					</div>
+				</div>
+			</div>
+			
+		);
+	};
 
+	const SecondPhase = () => {
+		return (
+			<div>
+			<div className=" flex content-center items-center justify-center h-full flex justify-center ">
+					<div className=" block p-6 rounded-lg shadow-lg bg-white max-w-sm w-full lg:w-4/10 px-4 ">
+						<h5 className="text-gray-900 text-xl leading-tight font-medium mb-2 w-full lg:w-4/10 px-4"> dates </h5>
+						<div className="text-gray-700 text-base mb-4">
+							<div className="flex justify-center">
+								<div className="w-full lg:w-4/10 px-4">
+									<div className="mt-3 flex items-center justify-center">
+										<Stack spacing={3}>
+											<TextField id="outlined-basic" label="Task Title" variant="outlined" />
+
+											<LocalizationProvider dateAdapter={AdapterDateFns}>
+												<DatePicker label="Initial Date" value={startingDateValue} onChange={(newValue) => {setStartingDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
+												<DatePicker label="Due Date" value={dueDateValue} onChange={(newValue) => {setDueDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
+												<TimePicker label="Time Due" value={dueTimeValue} onChange={(newValue) => { setDueTimeValue(newValue); }} renderInput={(params) => <TextField {...params} />}/>
+											</LocalizationProvider>
+										</Stack>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button onClick={()=>{
+							if (phaseCounter >= 2) {
+								phaseCounter = 0;
+							}else{
+								setPhaseState(phaseCounter)
+								phaseCounter+= 1
+							}
+						}} type="button"
+							className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+							next
+						</button>
+					</div>
+				</div>
+			</div>
+		);
+	};
+
+	function phaseReturns() {
+		if (phaseState === 1) {
+			return <FirstPhase />
+		} else if (phaseState === 2) {
+			return (<SecondPhase />)
+		}
+
+	}
+	
 
 	return (
 		<div>
 			{token && token !== "" && token !== undefined ? (
 				<div>
 					<Navbar />
-
-					
-					<div className=" flex content-center items-center justify-center h-full flex justify-center ">
-						<div className=" block p-6 rounded-lg shadow-lg bg-white max-w-sm w-full lg:w-4/10 px-4 ">
-							<h5 className="text-gray-900 text-xl leading-tight font-medium mb-2 w-full lg:w-4/10 px-4"> Card title </h5>
-							<div className="text-gray-700 text-base mb-4">
-								<div className="flex justify-center">
-									<div className="w-full lg:w-4/10 px-4">
-										<div className="mt-3 flex items-center justify-center">
-										<Stack spacing={3}>
-											<TextField id="outlined-basic" label="Task Title" variant="outlined" />
-
-											<LocalizationProvider dateAdapter={AdapterDateFns}>
-											<DatePicker label="Initial Date" value={startingDateValue} onChange={(newValue) => {setStartingDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
-											<DatePicker label="Due Date" value={dueDateValue} onChange={(newValue) => {setDueDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
-											<TimePicker label="Time Due" value={dueTimeValue} onChange={(newValue) => { setDueTimeValue(newValue); }} renderInput={(params) => <TextField {...params} />}/>
-											</LocalizationProvider>
-										</Stack>
-										</div>
-									</div>
-								</div>
-							</div>
-							<button type="button"
-								className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-								Button
-							</button>
-						</div>
-					</div>
+					{phaseReturns()}
 				</div>
 			) : (
 				history.push("/login")
 			)
-			}
+		}
 	</div>);
 
 }
