@@ -1,4 +1,4 @@
-
+I appologise for the stagnent nature of this project, more progress is promised during the following month. 
 
 ## Welcome to todobutbetter version 2.0
 
@@ -82,4 +82,3 @@ TODO
 - implement drag and drop
 
 - need to figure state storage
-    - use redux
