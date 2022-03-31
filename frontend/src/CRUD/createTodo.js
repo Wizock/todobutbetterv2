@@ -1,50 +1,50 @@
 import React, {forwardRef, useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import Navbar from "./navbarComponent";
-
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import MobileDatePicker from '@mui/lab/MobileDatePicker';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-
 import TimePicker from '@mui/lab/TimePicker';
 const axios = require("axios");
 
 function CreateTodo() {
 	let phaseCounter = 1;
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
-	const [priority, setPriority] = useState("");
-	const [error, setError] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
-
 	const token = localStorage.getItem("token");
 	const history = useHistory();
+	const [title, setTitle] = useState("");
+	const [keywords,    setKeywords] = useState("");
+	const [priority,    setPriority] = useState("");
+	const [description, setDescription] = useState("");
+
 	const [startingDateValue, setStartingDateValue] = useState(new Date());
 	const [dueDateValue, setDueDateValue]           = useState(new Date());
 	const [dueTimeValue, setDueTimeValue]           = useState(0);
 	const [phaseState, setPhaseState ] = useState(phaseCounter);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState("");
 	
 	const FirstPhase = () => {
 		return (
 			<div>
 			<div className=" flex content-center items-center justify-center h-full flex justify-center ">
 					<div className=" block p-6 rounded-lg shadow-lg bg-white max-w-sm w-full lg:w-4/10 px-4 ">
-						<h5 className="text-gray-900 text-xl leading-tight font-medium mb-2 w-full lg:w-4/10 px-4"> Card title </h5>
+						<h5 className="text-gray-900 text-xl leading-tight font-medium mb-2 w-full lg:w-4/10 px-4"> Create a Todo Task </h5>
 						<div className="text-gray-700 text-base mb-4">
 							<div className="flex justify-center">
 								<div className="w-full lg:w-4/10 px-4">
 									<div className="mt-3 flex items-center justify-center">
 										<Stack spacing={3}>
-											<TextField id="outlined-basic" label="Task Title" variant="outlined" />
+											<TextField onChange={(e)=> {
+												setTitle(e.data) 
+												console.log(e)}} id="outlined-basic" className="title"  label="Task Title" variant="outlined"  />
 
 											<LocalizationProvider dateAdapter={AdapterDateFns}>
-												<DatePicker label="Initial Date" value={startingDateValue} onChange={(newValue) => {setStartingDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
-												<DatePicker label="Due Date" value={dueDateValue} onChange={(newValue) => {setDueDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
-												<TimePicker label="Time Due" value={dueTimeValue} onChange={(newValue) => { setDueTimeValue(newValue); }} renderInput={(params) => <TextField {...params} />}/>
+												<DatePicker label="Initial Date"  onChange={(newValue) => {setStartingDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
+												<DatePicker label="Due Date"      onChange={(newValue) => {setDueDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
+												<TimePicker label="Time Due"      onChange={(newValue) => {setDueTimeValue(newValue); }} renderInput={(params) => <TextField {...params} />}/>
 											</LocalizationProvider>
 										</Stack>
 									</div>
@@ -52,9 +52,12 @@ function CreateTodo() {
 							</div>
 						</div>
 						<button onClick={()=>{
-							if (phaseCounter >= 2) {
-								phaseCounter = 0;
-							}
+							if (phaseCounter >= 2) { phaseCounter = 0;}
+							//get the value of title 
+							
+							// setTitle(document.getElementById("outlined-basic").value);
+							//get the value of description
+							console.log(`title ${title} ${startingDateValue} ,${dueDateValue} ,${dueTimeValue}`)
 							phaseCounter++
 							setPhaseState(phaseCounter)
 						}} type="button"
@@ -71,36 +74,32 @@ function CreateTodo() {
 	const SecondPhase = () => {
 		return (
 			<div>
-			<div className=" flex content-center items-center justify-center h-full flex justify-center ">
+				<div className=" flex content-center items-center justify-center h-full flex justify-center ">
 					<div className=" block p-6 rounded-lg shadow-lg bg-white max-w-sm w-full lg:w-4/10 px-4 ">
-						<h5 className="text-gray-900 text-xl leading-tight font-medium mb-2 w-full lg:w-4/10 px-4"> dates </h5>
+						<h5 className="text-gray-900 text-xl leading-tight font-medium mb-2 w-full lg:w-4/10 px-4"> Create a Todo Task </h5>
 						<div className="text-gray-700 text-base mb-4">
 							<div className="flex justify-center">
 								<div className="w-full lg:w-4/10 px-4">
 									<div className="mt-3 flex items-center justify-center">
 										<Stack spacing={3}>
-											<TextField id="outlined-basic" label="Task Title" variant="outlined" />
-
-											<LocalizationProvider dateAdapter={AdapterDateFns}>
-												<DatePicker label="Initial Date" value={startingDateValue} onChange={(newValue) => {setStartingDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
-												<DatePicker label="Due Date" value={dueDateValue} onChange={(newValue) => {setDueDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
-												<TimePicker label="Time Due" value={dueTimeValue} onChange={(newValue) => { setDueTimeValue(newValue); }} renderInput={(params) => <TextField {...params} />}/>
-											</LocalizationProvider>
+											<TextField  id="outlined-basic" label="keywords" helperText="Keywords Associated With Task" variant="outlined" />
+											<TextField  id="outlined-number" label="priority" helperText="1 - 100. Make sure the number is positive" type="number" InputLabelProps={{shrink: true, }}/>
+											<TextField  id="outlined-multiline-flexible" label="Task Description" multiline rows={4} />
 										</Stack>
 									</div>
 								</div>
 							</div>
 						</div>
-						<button onClick={()=>{
-							if (phaseCounter >= 2) {
-								phaseCounter = 0;
-							}else{
-								setPhaseState(phaseCounter)
-								phaseCounter+= 1
-							}
-						}} type="button"
+						<button  type="button" onClick={()=>{
+
+							setKeywords(document.getElementById("outlined-basic").value);
+							setPriority(document.getElementById("outlined-number").value);
+							setDescription(document.getElementById("outlined-multiline-flexible").value);
+							handleSubmit();
+							
+						}}
 							className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-							next
+							submit
 						</button>
 					</div>
 				</div>
@@ -114,9 +113,29 @@ function CreateTodo() {
 		} else if (phaseState === 2) {
 			return (<SecondPhase />)
 		}
-
 	}
 	
+	const handleSubmit = () => {
+		axios({
+			method: "POST",
+			url: "http://127.0.0.1:5000/task/create",
+			data: JSON.stringify({
+				'title': title,
+				'description': description,
+				'priority': priority,
+				'startingDateValue': startingDateValue,
+				'dueDateValue': dueDateValue,
+				'dueTimeValue': dueTimeValue,
+			}),
+			mode: "cors",
+			cache: "force-cache",
+			credentials: "same-origin",
+			"Access-Control-Allow-Origin": "*", // include, *same-origin, omit
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+	};
 
 	return (
 		<div>
@@ -130,25 +149,6 @@ function CreateTodo() {
 			)
 		}
 	</div>);
-
 }
 export default CreateTodo;
 
-// function updateCurrentState() {
-// 	const token = localStorage.getItem("token");
-
-// 	axios({
-// 		method: "GET",
-// 		url: "http://127.0.0.1:5000/task/create",
-// 		mode: "cors",
-// 		cache: "force-cache", // *default, no-cache, reload, force-cache, only-if-cached
-// 		credentials: "same-origin",
-// 		"Access-Control-Allow-Origin": "*", // include, *same-origin, omit
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			Authorization: `Bearer ${token}`,
-// 		},
-// 	}).then((response) => {
-// 		console.log();
-// 	});
-// }
