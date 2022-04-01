@@ -37,9 +37,7 @@ function CreateTodo() {
 								<div className="w-full lg:w-4/10 px-4">
 									<div className="mt-3 flex items-center justify-center">
 										<Stack spacing={3}>
-											<TextField onChange={(e)=> {
-												setTitle(e.data) 
-												console.log(e)}} id="outlined-basic" className="title"  label="Task Title" variant="outlined"  />
+											<TextField id="outlined-basic" className="title"  label="Task Title" variant="outlined"  />
 
 											<LocalizationProvider dateAdapter={AdapterDateFns}>
 												<DatePicker label="Initial Date"  onChange={(newValue) => {setStartingDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
