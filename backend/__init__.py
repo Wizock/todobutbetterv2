@@ -1,17 +1,13 @@
-
 from authlib.integrations.flask_client import OAuth
-from flask_login.login_manager import LoginManager
+from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 from backend.API.auth_api import auth
+from flask_migrate import Migrate
 from datetime import timedelta
 from flask_cors import CORS
-import flask_cors
 from flask import Flask
 import flask_praetorian
-from datetime import timedelta
-from flask_jwt_extended import JWTManager
-from secrets import token_urlsafe
-from random import randint
+import flask_cors
 
 def create_app():
     appvar = Flask(__name__)
@@ -42,6 +38,7 @@ with app.app_context():
     db = SQLAlchemy(app)
     from backend.models import _localuser
     jwt = JWTManager(app)
+    migrate = Migrate(app, db)
     guard.init_app(app, _localuser)
     db.create_all()
 

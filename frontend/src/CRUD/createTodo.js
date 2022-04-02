@@ -1,11 +1,10 @@
-import React, {forwardRef, useState, useEffect} from "react";
+import React, { useState, } from "react";
 import {useHistory} from "react-router-dom";
 import Navbar from "./navbarComponent";
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import TimePicker from '@mui/lab/TimePicker';
 const axios = require("axios");
@@ -23,10 +22,48 @@ function CreateTodo() {
 	const [dueDateValue, setDueDateValue]           = useState(new Date());
 	const [dueTimeValue, setDueTimeValue]           = useState(0);
 	const [phaseState, setPhaseState ] = useState(phaseCounter);
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState("");
+
 	
 	const FirstPhase = () => {
+		return (
+			<div>
+				<div className=" flex content-center items-center justify-center h-full flex justify-center ">
+					<div className=" block p-6 rounded-lg shadow-lg bg-white max-w-sm w-full lg:w-4/10 px-4 ">
+						<h5 className="text-gray-900 text-xl leading-tight font-medium mb-2 w-full lg:w-4/10 px-4"> Create a Todo Task </h5>
+						<div className="text-gray-700 text-base mb-4">
+							<div className="flex justify-center">
+								<div className="w-full lg:w-4/10 px-4">
+									<div className="mt-3 flex items-center justify-center">
+										<Stack spacing={3}>
+											<TextField id="outlined-basic title" className="title"  label="Task Title" variant="outlined"  />
+											<TextField  id="outlined-basic keywords" label="keywords" helperText="Keywords Associated With Task" variant="outlined" />
+											<TextField  id="outlined-number priority" label="priority" helperText="1 - 100. Make sure the number is positive" type="number" InputLabelProps={{shrink: true, }}/>
+											<TextField  id="outlined-multiline-flexible description" label="Task Description" multiline rows={4} />
+										</Stack>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button  type="button" onClick={()=>{
+							setTitle(document.getElementById("outlined-basic title").value);
+							setKeywords(document.getElementById("outlined-basic keywords").value);
+							setPriority(document.getElementById("outlined-number priority").value);
+							setDescription(document.getElementById("outlined-multiline-flexible description").value);
+
+							if (phaseCounter >= 2) { phaseCounter = 0;}
+							phaseCounter++;
+							setPhaseState(phaseCounter);					
+
+						}}
+							className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+							submit
+						</button>
+					</div>
+				</div>
+			</div>
+		);
+	};
+	const SecondPhase= () => {
 		return (
 			<div>
 			<div className=" flex content-center items-center justify-center h-full flex justify-center ">
@@ -37,7 +74,6 @@ function CreateTodo() {
 								<div className="w-full lg:w-4/10 px-4">
 									<div className="mt-3 flex items-center justify-center">
 										<Stack spacing={3}>
-											<TextField id="outlined-basic" className="title"  label="Task Title" variant="outlined"  />
 
 											<LocalizationProvider dateAdapter={AdapterDateFns}>
 												<DatePicker label="Initial Date"  onChange={(newValue) => {setStartingDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
@@ -50,14 +86,13 @@ function CreateTodo() {
 							</div>
 						</div>
 						<button onClick={()=>{
-							if (phaseCounter >= 2) { phaseCounter = 0;}
-							//get the value of title 
-							
-							// setTitle(document.getElementById("outlined-basic").value);
-							//get the value of description
-							console.log(`title ${title} ${startingDateValue} ,${dueDateValue} ,${dueTimeValue}`)
-							phaseCounter++
-							setPhaseState(phaseCounter)
+							console.log({'title': title,
+							'description': description,
+							'priority': priority,
+							'startingDateValue': startingDateValue,
+							'dueDateValue': dueDateValue,
+							'dueTimeValue': dueTimeValue,});							
+							handleSubmit();
 						}} type="button"
 							className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
 							next
@@ -69,45 +104,10 @@ function CreateTodo() {
 		);
 	};
 
-	const SecondPhase = () => {
-		return (
-			<div>
-				<div className=" flex content-center items-center justify-center h-full flex justify-center ">
-					<div className=" block p-6 rounded-lg shadow-lg bg-white max-w-sm w-full lg:w-4/10 px-4 ">
-						<h5 className="text-gray-900 text-xl leading-tight font-medium mb-2 w-full lg:w-4/10 px-4"> Create a Todo Task </h5>
-						<div className="text-gray-700 text-base mb-4">
-							<div className="flex justify-center">
-								<div className="w-full lg:w-4/10 px-4">
-									<div className="mt-3 flex items-center justify-center">
-										<Stack spacing={3}>
-											<TextField  id="outlined-basic" label="keywords" helperText="Keywords Associated With Task" variant="outlined" />
-											<TextField  id="outlined-number" label="priority" helperText="1 - 100. Make sure the number is positive" type="number" InputLabelProps={{shrink: true, }}/>
-											<TextField  id="outlined-multiline-flexible" label="Task Description" multiline rows={4} />
-										</Stack>
-									</div>
-								</div>
-							</div>
-						</div>
-						<button  type="button" onClick={()=>{
-
-							setKeywords(document.getElementById("outlined-basic").value);
-							setPriority(document.getElementById("outlined-number").value);
-							setDescription(document.getElementById("outlined-multiline-flexible").value);
-							handleSubmit();
-							
-						}}
-							className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-							submit
-						</button>
-					</div>
-				</div>
-			</div>
-		);
-	};
 
 	function phaseReturns() {
 		if (phaseState === 1) {
-			return <FirstPhase />
+			return (<FirstPhase />)
 		} else if (phaseState === 2) {
 			return (<SecondPhase />)
 		}
@@ -133,6 +133,13 @@ function CreateTodo() {
 				"Content-Type": "application/json",
 			},
 		})
+		console.log({'title': title,
+		'description': description,
+		'priority': priority,
+		'startingDateValue': startingDateValue,
+		'dueDateValue': dueDateValue,
+		'dueTimeValue': dueTimeValue,});							
+
 	};
 
 	return (

@@ -68,19 +68,24 @@ class _localuser(UserMixin,db.Model):
 
 class task_dispatch(db.Model):
     __tablename__ = 'task_dispatch'
-    id = db.Column(db.Integer(), primary_key = True)
-    task_owner = db.Column(db.String(), db.ForeignKey('_localuser.username'))
-    activity = db.Column(db.String(), nullable=False)
-    creation_date = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
-    due_time = db.Column(db.DateTime(), default=2)
-    urgency = db.Column(db.Integer())
+    id                  = db.Column(db.Integer(), primary_key = True)
+    task_owner          = db.Column(db.String() , db.ForeignKey('_localuser.username'), nullable=False)
+    title               = db.Column(db.String() , nullable=False)
+    description         = db.Column(db.String() , nullable=False)
+    priority            = db.Column(db.Integer(), nullable=False)
+    starting_date_value = db.Column(db.Time()   , nullable=False)
+    due_date_value      = db.Column(db.Date()   , nullable=False)
+    due_time_value      = db.Column(db.Date()   , nullable=False)
+    def __repr__(self):
+        return '<Task %r>' % self.title
 
-    def __init__(self,task_owner,activity,creation_date,due_time,urgency): 
-        self.task_owner = task_owner
-        self.activity = activity
-        self.creation_date = creation_date
-        self.due_time = due_time
-        self.urgency = urgency
+    def __init__(self,title,description,priority,starting_date_value,due_date_value,due_time_value) -> None:
+        self.title = title
+        self.description = description
+        self.priority = priority
+        self.starting_date_value = starting_date_value
+        self.due_date_value = due_date_value
+        self.due_time_value = due_time_value
 
 class _googleAuthUser(UserMixin, db.Model):
     __tablename__ = '_googleAuthUser'
