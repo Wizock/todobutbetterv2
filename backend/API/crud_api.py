@@ -26,7 +26,6 @@ def create_task():
         due_date_value = request.json['due_date_value']
         due_time_value = request.json['due_time_value']
         data = jsonify(request.json)
-        print(data)
         data.headers.add('Access-Control-Allow-Origin', '*')
         task_creation = task_dispatch(task_owner,creation_date,title,description,priority,starting_date_value,due_date_value,due_time_value,)
         db.session.add(task_creation)
