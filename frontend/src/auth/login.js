@@ -180,6 +180,9 @@ function Tlogin() {
 														}}>
 														Sign In
 													</button>
+													<small>
+													Dont Have an Account? please <a href='/register'>Register</a>
+												</small>
 												</div>
 											</form>
 										</div>
@@ -202,9 +205,7 @@ function Tlogin() {
 													e.preventDefault()
 												}
 												className="text-gray-300">
-												<small>
-													Create new account
-												</small>
+											
 											</a>
 										</div>
 									</div>

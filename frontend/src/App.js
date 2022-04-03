@@ -7,7 +7,6 @@ import Navbar from './CRUD/navbarComponent';
 import GetUser from './CRUD/getUsersComponent';
 import CreateTodo from './CRUD/createTodo';
 
-
 function Homepage (){
     let Login = <LoginPage />
     let Register = <RegisterPage />
@@ -47,18 +46,13 @@ function Homepage (){
 }
 function routeControllerLoginRequired(){
     const token = localStorage.getItem("token");
-	// const external_controller = useHistory();
     let routes_controller = <Homepage />
-
-    if (token && token !== "" && token !== undefined) {
-        return (<CreateTodo />)
-    }
-    else {
-        return (<LoginPage />)
-    }
+    return routes_controller
 }
 
 function App() {
+	const History = useHistory();
+
     return (
     <div className="App">
         {routeControllerLoginRequired()}

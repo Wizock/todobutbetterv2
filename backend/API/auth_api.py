@@ -30,7 +30,7 @@ def register():
         data.headers.add('Access-Control-Allow-Origin', '*')
         return 200
     if request.method=="GET":
-        return "this is the register route from the auth api <br><br><br> this is the address https://127.0.0.1:5000/register"
+        return "this is the register route from the auth api <br><br><br> this is the address https://127.0.0.1:5000/register", 300
 
 @auth.route('/login', methods=['POST','OPTIONS','GET'])
 @cross_origin()

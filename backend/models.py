@@ -70,6 +70,7 @@ class task_dispatch(db.Model):
     __tablename__ = 'task_dispatch'
     id                  = db.Column(db.Integer(), primary_key = True)
     task_owner          = db.Column(db.String() , db.ForeignKey('_localuser.username'), nullable=False)
+    creation_time       = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     title               = db.Column(db.String() , nullable=False)
     description         = db.Column(db.String() , nullable=False)
     priority            = db.Column(db.Integer(), nullable=False)
@@ -79,7 +80,7 @@ class task_dispatch(db.Model):
     def __repr__(self):
         return '<Task %r>' % self.title
 
-    def __init__(self,title,description,priority,starting_date_value,due_date_value,due_time_value) -> None:
+    def __init__(self,task_owner,title,description,priority,starting_date_value,due_date_value,due_time_value) -> None:
         self.title = title
         self.description = description
         self.priority = priority
