@@ -29,7 +29,7 @@ Flask_JWT_Extended==4.3.1
 
 Flask_Login==0.5.0
 
-flask_praetorian==1.3.0
+Flask_Praetorian==1.3.0
 
 Flask_SQLAlchemy==2.5.1
 
