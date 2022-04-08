@@ -1,15 +1,13 @@
 
-from calendar import c
-import time
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
-from flask_login import login_required, current_user, login_user, logout_user
-from werkzeug.utils import redirect
+from flask import Blueprint, request, jsonify
+from backend.models import task_dispatch
 from flask_cors import cross_origin
+from backend.__init__ import db
 import flask_praetorian
+import time
+
 crud = Blueprint('crud_api', __name__)
 
-from backend.__init__ import db
-from backend.models import task_dispatch
 
 @crud.route('/task/create',methods=['POST','OPTIONS'])
 @flask_praetorian.auth_required
