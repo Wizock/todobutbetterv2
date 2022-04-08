@@ -1,5 +1,5 @@
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response 
 from backend.models import task_dispatch
 from flask_cors import cross_origin
 from backend.__init__ import db
@@ -8,38 +8,65 @@ import time
 
 crud = Blueprint('crud_api', __name__)
 
-
 @crud.route('/task/create',methods=['POST','OPTIONS'])
-@flask_praetorian.auth_required
 @cross_origin()
+@flask_praetorian.auth_required
 def create_task():
     if request.method=="POST":
         task_owner = flask_praetorian.current_user().username
-        print(task_owner)
-        creation_date = time.strftime('%H:%M:%S')
+        print(request.json)
         title = request.json['title']
         description = request.json['description']
         priority = request.json['priority']
-        starting_date_value = request.json['starting_date_value'] 
-        due_date_value = request.json['due_date_value']
-        due_time_value = request.json['due_time_value']
-        data = jsonify(request.json)
-        data.headers.add('Access-Control-Allow-Origin', '*')
-        task_creation = task_dispatch(task_owner,creation_date,title,description,priority,starting_date_value,due_date_value,due_time_value,)
+        starting_date_value = request.json['startingDateValue'] 
+        due_date_value = request.json['dueDateValue']
+        due_time_value = request.json['dueTimeValue']
+        task_creation = task_dispatch(task_owner,title,description,priority,starting_date_value,due_date_value,due_time_value)
         db.session.add(task_creation)
         db.session.commit()
-        data = jsonify(request.json)
-        data.headers.add('Access-Control-Allow-Origin', '*')
-        return 200
+        return Response("{'a':'b'}", status=200, mimetype='application/json')
+    else:
+        return Response("{'a':'b'}", status=200, mimetype='application/json')
 
 @crud.route('/task/show',methods=['GET','OPTIONS'])
-@flask_praetorian.auth_required
 @cross_origin()
+@flask_praetorian.auth_required
 def show_task():
     if request.method=="GET":
-        tasks = task_dispatch.query.filter_by(username=flask_praetorian.current_user().username)
-        tasks.headers.add('Access-Control-Allow-Origin', '*')
-        return  jsonify({'elements': tasks})
+        tasks_query = task_dispatch.query.filter_by(task_owner=flask_praetorian.current_user().username).all()
+        tasks_list = []
+        for task in tasks_query:
+            tasks_list.append({
+                'taskOwner': task.task_owner,
+                'id': task.id,
+                'title': task.title,
+                'description': task.description,
+                'priority': task.priority,
+                'startingDateValue': task.starting_date_value,
+                'dueDateValue': task.due_date_value,
+                'dueTimeValue': task.due_time_value
+            })
+        # print(tasks_list)
+        
+        # tasks_list.headers.add('Access-Control-Allow-Origin', '*')
+        return jsonify(tasks_list), 200
+
+
+
+
+
+
+
+
+
+
+
+
+    #     return  jsonify({'elements': tasks})
+    # else:
+    #     return Response("{'a':'b'}", status=200, mimetype='application/json')
+
+        
 
 
 @crud.route('/task/delete',methods=['DELETE','OPTIONS'])

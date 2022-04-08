@@ -6,13 +6,15 @@ import RegisterPage from './auth/register';
 import Navbar from './CRUD/navbarComponent';
 import GetUser from './CRUD/getUsersComponent';
 import CreateTodo from './CRUD/createTodo';
-
+import GetUserTodos from './CRUD/showAll';
 function Homepage (){
     let Login = <LoginPage />
     let Register = <RegisterPage />
     let Navbar_ = <Navbar />
     let GettingUsers = <GetUser />
     let CrudRoute = <CreateTodo />
+    let todos = <GetUserTodos />
+
     return (
         <div>
             <Router>
@@ -24,6 +26,12 @@ function Homepage (){
                 <Link to="/crudRoute"></Link>
 
                 <Switch>
+                    <Route path="/">
+                        {todos}
+                    </Route>
+                    <Route path="/crudRoute">
+                        {CrudRoute}
+                    </Route>
                     <Route path="/login">
                         {Login}
                     </Route>

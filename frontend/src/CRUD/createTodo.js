@@ -14,13 +14,12 @@ function CreateTodo() {
 	const token = localStorage.getItem("token");
 	const history = useHistory();
 	const [title, setTitle] = useState("");
-	const [keywords,    setKeywords] = useState("");
 	const [priority,    setPriority] = useState("");
 	const [description, setDescription] = useState("");
 
-	const [startingDateValue, setStartingDateValue] = useState(new Date());
-	const [dueDateValue, setDueDateValue]           = useState(new Date());
-	const [dueTimeValue, setDueTimeValue]           = useState(0);
+	const [startingDateValue, setStartingDateValue] = useState(new Date().toLocaleString().split(',')[0]);
+	const [dueDateValue, setDueDateValue]           = useState(new Date().toLocaleString().split(',')[0]);
+	const [dueTimeValue, setDueTimeValue]           = useState(new Date().toLocaleString().split(',')[1]);
 	const [phaseState, setPhaseState ] = useState(phaseCounter);
 
 	
@@ -36,7 +35,6 @@ function CreateTodo() {
 									<div className="mt-3 flex items-center justify-center">
 										<Stack spacing={3}>
 											<TextField id="outlined-basic title" className="title"  label="Task Title" variant="outlined"  />
-											<TextField  id="outlined-basic keywords" label="keywords" helperText="Keywords Associated With Task" variant="outlined" />
 											<TextField  id="outlined-number priority" label="priority" helperText="1 - 100. Make sure the number is positive" type="number" InputLabelProps={{shrink: true, }}/>
 											<TextField  id="outlined-multiline-flexible description" label="Task Description" multiline rows={4} />
 										</Stack>
@@ -46,7 +44,6 @@ function CreateTodo() {
 						</div>
 						<button  type="button" onClick={()=>{
 							setTitle(document.getElementById("outlined-basic title").value);
-							setKeywords(document.getElementById("outlined-basic keywords").value);
 							setPriority(document.getElementById("outlined-number priority").value);
 							setDescription(document.getElementById("outlined-multiline-flexible description").value);
 
@@ -56,14 +53,24 @@ function CreateTodo() {
 
 						}}
 							className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-							submit
+							next
 						</button>
 					</div>
 				</div>
 			</div>
 		);
 	};
+	const handleChangesetStartingDateValue = (newValue) => {
+		setStartingDateValue(newValue);
+	};
+	const handleChangesetDueDateValue = (newValue) => {
+		setDueDateValue(newValue);
+	};
+	const handleChangesetDueTimeValue = (newValue) => {
+		setDueTimeValue(newValue);
+	};
 	const SecondPhase= () => {
+		
 		return (
 			<div>
 			<div className=" flex content-center items-center justify-center h-full flex justify-center ">
@@ -73,29 +80,22 @@ function CreateTodo() {
 							<div className="flex justify-center">
 								<div className="w-full lg:w-4/10 px-4">
 									<div className="mt-3 flex items-center justify-center">
-										<Stack spacing={3}>
-
-											<LocalizationProvider dateAdapter={AdapterDateFns}>
-												<DatePicker label="Initial Date"  onChange={(newValue) => {setStartingDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
-												<DatePicker label="Due Date"      onChange={(newValue) => {setDueDateValue(newValue);}}renderInput={(params) => <TextField {...params} />}/>
-												<TimePicker label="Time Due"      onChange={(newValue) => {setDueTimeValue(newValue); }} renderInput={(params) => <TextField {...params} />}/>
-											</LocalizationProvider>
-										</Stack>
+										<LocalizationProvider dateAdapter={AdapterDateFns}>
+											<Stack spacing={3}>
+												<DatePicker label="Initial Date" inputFormat="dd/MM/yyyy" value={startingDateValue} onChange={handleChangesetStartingDateValue} renderInput={(params1) => <TextField {...params1} />}/>
+												<DatePicker label="Due Date"     inputFormat="dd/MM/yyyy" value={dueDateValue}      onChange={handleChangesetDueDateValue}           renderInput={(params2) => <TextField {...params2} />}/>
+												<TimePicker label="Time Due"                              value={dueTimeValue}      onChange={handleChangesetDueTimeValue}            renderInput={(params3) => <TextField {...params3} />}/>
+											</Stack>
+										</LocalizationProvider>
 									</div>
 								</div>
 							</div>
 						</div>
-						<button onClick={()=>{
-							console.log({'title': title,
-							'description': description,
-							'priority': priority,
-							'startingDateValue': startingDateValue,
-							'dueDateValue': dueDateValue,
-							'dueTimeValue': dueTimeValue,});							
+						<button onClick={()=>{							
 							handleSubmit();
 						}} type="button"
 							className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-							next
+							submit
 						</button>
 					</div>
 				</div>
@@ -121,16 +121,18 @@ function CreateTodo() {
 				'title': title,
 				'description': description,
 				'priority': priority,
-				'startingDateValue': startingDateValue,
-				'dueDateValue': dueDateValue,
-				'dueTimeValue': dueTimeValue,
+				'startingDateValue': startingDateValue.toLocaleString().split(',')[0],
+				'dueDateValue': dueDateValue.toLocaleString().split(',')[0],
+				'dueTimeValue': dueTimeValue.toLocaleString().split(',')[1],
 			}),
 			mode: "cors",
 			cache: "force-cache",
 			credentials: "same-origin",
 			"Access-Control-Allow-Origin": "*", // include, *same-origin, omit
 			headers: {
-				"Content-Type": "application/json",
+				
+				'Content-Type': 'application/json',
+            	Authorization: `Bearer ${token}`,
 			},
 		})
 		console.log({'title': title,
@@ -138,7 +140,8 @@ function CreateTodo() {
 		'priority': priority,
 		'startingDateValue': startingDateValue,
 		'dueDateValue': dueDateValue,
-		'dueTimeValue': dueTimeValue,});							
+		'dueTimeValue': dueTimeValue,});
+		history.push('/')							
 
 	};
 

@@ -4,22 +4,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import timedelta
 from flask_cors import CORS
+from backend import libs
 from flask import Flask
 import flask_praetorian
 import flask_cors
 
-def load_api(app: Flask) -> None:
-    from backend.API.auth_api import auth
-    from backend.API.crud_api import crud
-
-    app.register_blueprint(auth)
-    app.register_blueprint(crud)
-
-
 def create_app() -> Flask:
     appvar = Flask(__name__)
     appvar.secret_key = r"33pay9V7FYhHGpZOO_-KOOTS6saVUI-Si6tZKPQiuSvQk8Y9CBt8yatkIgNd1CkW2_tukyn6VfdNba67_h0PgO0vbvk2A2BSlPE6K1c4OFM_cPwHCIH_7HxI_MqUbBpVuds9dVHAfxH-fzGXo_rc-B7KJNciaI6H3ktNB_Zn_Xw"
-    
 
     appvar.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/todobutbetter.sqlite3'
     appvar.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -45,10 +37,9 @@ with app.app_context():
     cors = flask_cors.CORS(app)
     guard = flask_praetorian.Praetorian()
     db = SQLAlchemy(app)
-    load_api(app)
+    libs.load_api(app)
     from backend.models import _localuser
     jwt = JWTManager(app)
     migrate = Migrate(app, db)
     guard.init_app(app, _localuser)
     db.create_all()
-

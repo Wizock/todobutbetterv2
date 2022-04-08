@@ -1,14 +1,8 @@
 import datetime
-from authlib.integrations.sqla_oauth2 import OAuth2TokenMixin
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_login import UserMixin, AnonymousUserMixin
-from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
+from flask_login import UserMixin
 from backend.__init__ import db as db
 from backend.__init__ import guard as guard
-
-
 
 class _localuser(UserMixin,db.Model):
     __tablename__ = '_localuser'
@@ -74,13 +68,14 @@ class task_dispatch(db.Model):
     title               = db.Column(db.String() , nullable=False)
     description         = db.Column(db.String() , nullable=False)
     priority            = db.Column(db.Integer(), nullable=False)
-    starting_date_value = db.Column(db.Time()   , nullable=False)
-    due_date_value      = db.Column(db.Date()   , nullable=False)
-    due_time_value      = db.Column(db.Date()   , nullable=False)
+    starting_date_value = db.Column(db.String()   , nullable=False)
+    due_date_value      = db.Column(db.String()   , nullable=False)
+    due_time_value      = db.Column(db.String()   , nullable=False)
     def __repr__(self):
         return '<Task %r>' % self.title
 
     def __init__(self,task_owner,title,description,priority,starting_date_value,due_date_value,due_time_value) -> None:
+        self.task_owner = task_owner
         self.title = title
         self.description = description
         self.priority = priority
