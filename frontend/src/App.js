@@ -13,7 +13,7 @@ function Homepage (){
     let Navbar_ = <Navbar />
     let GettingUsers = <GetUser />
     let CrudRoute = <CreateTodo />
-    let todos = <GetUserTodos />
+    let Todos = <GetUserTodos />
 
     return (
         <div>
@@ -27,7 +27,7 @@ function Homepage (){
 
                 <Switch>
                     <Route path="/">
-                        {todos}
+                        {Todos}
                     </Route>
                     <Route path="/crudRoute">
                         {CrudRoute}
@@ -52,21 +52,12 @@ function Homepage (){
         </div>
     )
 }
-function routeControllerLoginRequired(){
-    const token = localStorage.getItem("token");
-    let routes_controller = <Homepage />
-    return routes_controller
-}
+
 
 function App() {
 	const History = useHistory();
 
-    return (
-    <div className="App">
-        {routeControllerLoginRequired()}
-        
-    </div>
-    );
+    return <Homepage/>
 }
 
 export default App;
