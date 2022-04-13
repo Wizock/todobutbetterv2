@@ -71,15 +71,15 @@ please do not steal or claim this application.
 Forking is more than reccomended and motivated. 
   
 
-TODO
+## TODO
 
-- need to make creation system [x]
-- research safe token storage [x]
+- [x] need to make creation system 
+- [x] research safe token storage 
+- [x] need to make update system
+- [x] implement css flex 
+- [x] need to figure state storage 
 - impliment super-tokens for backend
 - impliment personal page
 - design useful statistics
 - design a share-able link API
-- need to make update system [x]
-- implement css flex [x]
 - implement drag and drop
-- need to figure state storage [x]
