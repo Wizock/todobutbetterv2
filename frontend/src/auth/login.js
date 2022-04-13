@@ -40,7 +40,7 @@ function Tlogin() {
 	return (
 		<div>
 			{token && token !== "" && token !== undefined ? (
-				history.push("/users")
+				history.push("/todo")
 			) : (
 				<main>
 					<section className="absolute w-full h-full">
