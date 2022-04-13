@@ -7,7 +7,7 @@ function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 	return (
 		<div>
-			<nav className="rounded-b bg-gray-800">
+			<nav style={{backgroundColor:"#3145a8"}} className="rounded-b bg-gray-800">
 				<div className=" rounded-lg max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="flex items-center justify-between h-16">
 						<div className="flex items-center">
@@ -20,11 +20,11 @@ function Navbar() {
 							<div className="flex flex-row-reverse">
 								<div className="hidden md:block">
 									<div className="ml-10 flex items-baseline space-x-4">
-										<a href="#" className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"> Dashboard</a>
-										<a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Team</a>
-										<a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Projects</a>
-										<a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Calendar</a>
-										<a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Reports</a>
+										<a href="#" className=" hover:bg-blue-900  text-white px-3 py-2 rounded-md text-sm font-medium"> Dashboard</a>
+										<a href="#" className="text-gray-300 hover:bg-blue-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Team</a>
+										<a href="#" className="text-gray-300 hover:bg-blue-900  hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Projects</a>
+										<a href="#" className="text-gray-300 hover:bg-blue-900  hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Calendar</a>
+										<a href="#" className="text-gray-300 hover:bg-blue-900  hover:text-white px-3 py-2 rounded-md text-sm font-medium"> Reports</a>
 									</div>
 								</div>
 							</div>
@@ -66,11 +66,11 @@ function Navbar() {
 					{(ref) => (
 						<div className="md:hidden" id="mobile-menu">
 							<div ref={ref} className="align-content-center px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#" className="hover:bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium"> Dashboard</a>
-								<a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"> 	Team </a>
-								<a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"> Projects</a>
-								<a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
-								<a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"> Reports </a>
+                <a href="#" className="hover:bg-blue-900 text-white block px-3 py-2 rounded-md text-base font-medium"> Dashboard</a>
+								<a href="#" className="text-gray-300 hover:bg-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"> 	Team </a>
+								<a href="#" className="text-gray-300 hover:bg-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"> Projects</a>
+								<a href="#" className="text-gray-300 hover:bg-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
+								<a href="#" className="text-gray-300 hover:bg-blue-900 hover:text-white block px-3 py-2 rounded-md text-base font-medium"> Reports </a>
 							</div>
 						</div>
 					)}
