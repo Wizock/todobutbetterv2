@@ -13,10 +13,10 @@ function Tlogin() {
 		axios({
 			method: "POST",
 			url: "/auth/login",
-			data: JSON.stringify({
+			data: {
 				username: username,
 				password: password,
-			}),
+			},
 			headers: {
 				"Content-Type": "application/json",
 			},
@@ -31,8 +31,6 @@ function Tlogin() {
 				console.log(error);
 			}
 		);
-
-			
 	};
 	return (
 		<div>
