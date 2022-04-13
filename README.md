@@ -1,4 +1,15 @@
-I appologise for the stagnent nature of this project, more progress is promised during the following month. 
+## Quick-Start:
+Frontend Setup:
+```batch
+npm install
+cd frontend
+npm install
+```
+Backend Setup: 
+```batch
+pip install poetry
+poetry install
+```
 
 ## Welcome to todobutbetter version 2.0
 
@@ -11,8 +22,6 @@ Django, HTML, CSS, Bootstrap, Postgres
 however, html and css is somthing that if hand written, is considered primative. It is my opinion that SSR applications are under-developed
 
 **So welcome to version 2.0**
-
-  
 
 the tech stack used for version 2: 
 
