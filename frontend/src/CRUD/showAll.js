@@ -9,16 +9,48 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme } from "@mui/material/styles";
 import Navbar from "./navbarComponent";
+import token from "../tokenFetcher";
 const axios = require("axios");
 
-function GetUserTodos() {
+const editData = (id) => {
+    console.log(id);
+    axios({
+        method: "POST",
+        url: `/crud/task/edit/${id}`,
+        mode: "cors",
+        cache: "force-cache",
+        credentials: "same-origin",
+        "Access-Control-Allow-Origin": "*", // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+};
+
+const deleteData = (id) => {
+    console.log(id);
+    axios({
+        method: "POST",
+        url: `/crud/task/delete/${id}`,
+        mode: "cors",
+        cache: "force-cache",
+        credentials: "same-origin",
+        "Access-Control-Allow-Origin": "*", // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+};
+
+
+async function GetUserTodos() {
 	const [todoQueries, setTodoQueries] = useState([]);
-	const history = useHistory();
-	const token = localStorage.getItem("token");
-	useEffect(() => {
+	await useEffect(() => {
 		axios({
 			method: "GET",
-			url: "http://127.0.0.1:5000/task/show",
+			url: "/crud/task/show",
 			mode: "cors",
 			cache: "force-cache", // *default, no-cache, reload, force-cache, only-if-cached
 			credentials: "same-origin",
@@ -31,6 +63,7 @@ function GetUserTodos() {
 			setTodoQueries(response.data);
 		});
 	}, []);
+
 
 	let styles = {
 		background: {
@@ -66,6 +99,7 @@ function GetUserTodos() {
 				<div style={styles.main}>
 					{todoQueries.map((todoQuery) => (
 						<div id={todoQuery.id} key={todoQuery.id}>
+                            
 							<Card variant="outlined" sx={styles.cardCSS}>
 								<CardContent>
 									<Typography sx={{ fontSize: 14 }} gutterBottom>
@@ -78,9 +112,7 @@ function GetUserTodos() {
 										{todoQuery.description}
 									</Typography>
 									<Typography variant="body2">
-										well meaning and kindly.
-										<br />
-										{'"a benevolent smile"'}
+                                    <Button onClick={(e) => deleteData(todoQuery.id)} size="small">Delete</Button>
 									</Typography>
 								</CardContent>
 							</Card>
@@ -94,10 +126,21 @@ function GetUserTodos() {
 
 
 function MainPage() {
+	const history = useHistory();
+
     return (
         <div>
-            <Navbar />
-            <GetUserTodos />
+            {token !== localStorage.getItem("token") ? (
+				
+                history.push("/login")
+			) : (
+                <div>
+                <Navbar />
+
+                <GetUserTodos />
+                </div>
+                )
+            }
         </div>
     );
 }

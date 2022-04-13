@@ -1,33 +1,31 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import token from "../tokenFetcher"
 const axios = require("axios");
 
 function Tlogin() {
 	const [username, setUsername] = useState(0);
 	const [password, setPassword] = useState(0);
-	const token = localStorage.getItem("token");
+	const [token, setToken] = useState([]);
 	const history = useHistory();
 
 	const handleSubmit = () => {
 		axios({
 			method: "POST",
-			url: "http://127.0.0.1:5000/login",
+			url: "/auth/login",
 			data: JSON.stringify({
 				username: username,
 				password: password,
 			}),
-			mode: "cors",
-			cache: "force-cache", // *default, no-cache, reload, force-cache, only-if-cached
-			credentials: "same-origin",
-			"Access-Control-Allow-Origin": "*", // include, *same-origin, omit
 			headers: {
 				"Content-Type": "application/json",
 			},
 		})
 			.then((response) => {
-				alert(JSON.stringify(response.data.access_token));
-				console.log(response.data.access_token);
-				localStorage.setItem("token", response.data.access_token);
+				console.log(response);
+				setToken(response.data);
+				localStorage.setItem("token", token);
+				history.push("/todo");
 			})
 			.then((token) => {
 				if (token.access_token) {
@@ -39,8 +37,14 @@ function Tlogin() {
 	};
 	return (
 		<div>
-			{token && token !== "" && token !== undefined ? (
-				history.push("/todo")
+			{token === localStorage.getItem("token") ? (
+				<div>
+					<h1>You are logged in</h1>
+					<h2>{token}</h2>
+					<button onClick={() => history.push("/")}>
+						Home
+					</button>
+				</div>
 			) : (
 				<main>
 					<section className="absolute w-full h-full">

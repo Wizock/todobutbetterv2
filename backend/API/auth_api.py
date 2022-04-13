@@ -57,7 +57,10 @@ def login_route():
         if user_query:
             print(user_query)
             gen_jwt = guard.encode_jwt_token(user_query)
-            return jsonify({"access_token": gen_jwt}), 200
+            data = jsonify({"access_token": gen_jwt})
+            data.headers.add("Access-Control-Allow-Origin", "*")
+            print(data)
+            return data, 200
     if request.method == "GET":
         return "You didnt post"
 

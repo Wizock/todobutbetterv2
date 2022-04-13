@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { useHistory } from 'react-router-dom';
+
 const axios = require("axios");
 
 function postRegister(email,username, password,firstname,lastname){
@@ -8,7 +9,7 @@ function postRegister(email,username, password,firstname,lastname){
     return axios(
             {
             method:'POST',
-            'url': 'http://127.0.0.1:5000/register',
+            'url': '/auth/register',
             data: JSON.stringify({
                 'email':email,
                 'username': username,

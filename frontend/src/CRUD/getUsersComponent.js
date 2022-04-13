@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
 import { useHistory } from 'react-router-dom';
+import token from "../tokenFetcher"
 const axios = require("axios");
 
 function GetUser(){
     const [userid, setUserid] = useState(0);
     const [username, setUsername] = useState(0);
     const [email, setEmail] = useState(0);
-    const token = localStorage.getItem('token')
     const history = useHistory()
     
     axios(
         {
         method:'GET',
-        'url': 'http://127.0.0.1:5000/get_user',
+        'url': '/auth/get_user',
         mode: 'cors',
         cache: 'force-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin',

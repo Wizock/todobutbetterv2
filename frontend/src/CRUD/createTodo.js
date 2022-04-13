@@ -7,11 +7,11 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import Stack from '@mui/material/Stack';
 import TimePicker from '@mui/lab/TimePicker';
+import token from "../tokenFetcher"
 const axios = require("axios");
 
 function CreateTodo() {
 	let phaseCounter = 1;
-	const token = localStorage.getItem("token");
 	const history = useHistory();
 	const [title, setTitle] = useState("");
 	const [priority,    setPriority] = useState("");
@@ -116,7 +116,7 @@ function CreateTodo() {
 	const handleSubmit = () => {
 		axios({
 			method: "POST",
-			url: "http://127.0.0.1:5000/task/create",
+			url: "/crud/task/create",
 			data: JSON.stringify({
 				'title': title,
 				'description': description,
@@ -135,12 +135,6 @@ function CreateTodo() {
             	Authorization: `Bearer ${token}`,
 			},
 		})
-		console.log({'title': title,
-		'description': description,
-		'priority': priority,
-		'startingDateValue': startingDateValue,
-		'dueDateValue': dueDateValue,
-		'dueTimeValue': dueTimeValue,});
 		history.push('/')							
 
 	};
