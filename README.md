@@ -73,12 +73,13 @@ Forking is more than reccomended and motivated.
 
 TODO
 
-- need to make creation system
-- research safe token storage
-- need to make update system
-
-- implement css flex
-
+- need to make creation system [x]
+- research safe token storage [x]
+- impliment super-tokens for backend
+- impliment personal page
+- design useful statistics
+- design a share-able link API
+- need to make update system [x]
+- implement css flex [x]
 - implement drag and drop
-
-- need to figure state storage
+- need to figure state storage [x]
