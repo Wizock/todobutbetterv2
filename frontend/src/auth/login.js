@@ -27,13 +27,12 @@ function Tlogin() {
 				localStorage.setItem("token", token);
 				history.push("/todo");
 			})
-			.then((token) => {
-				if (token.access_token) {
-					alert(token);
-				} else {
-					console.log("it didnt work");
-				}
-			});
+			.catch((error) => {
+				console.log(error);
+			}
+		);
+
+			
 	};
 	return (
 		<div>
