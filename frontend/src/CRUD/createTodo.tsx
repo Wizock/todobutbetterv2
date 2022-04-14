@@ -7,7 +7,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import Stack from '@mui/material/Stack';
 import TimePicker from '@mui/lab/TimePicker';
-import token from "../tokenFetcher"
+import {GetToken} from "../tokenFetcher"
 const axios = require("axios");
 
 function CreateTodo() {
@@ -43,9 +43,9 @@ function CreateTodo() {
 							</div>
 						</div>
 						<button  type="button" onClick={()=>{
-							setTitle(document.getElementById("outlined-basic title").value);
-							setPriority(document.getElementById("outlined-number priority").value);
-							setDescription(document.getElementById("outlined-multiline-flexible description").value);
+							setTitle((document.getElementById("outlined-basic title") as HTMLInputElement).value);
+							setPriority((document.getElementById("outlined-number priority") as HTMLInputElement).value);
+							setDescription((document.getElementById("outlined-multiline-flexible description") as HTMLInputElement).value);
 
 							if (phaseCounter >= 2) { phaseCounter = 0;}
 							phaseCounter++;
@@ -130,9 +130,8 @@ function CreateTodo() {
 			credentials: "same-origin",
 			"Access-Control-Allow-Origin": "*", // include, *same-origin, omit
 			headers: {
-				
 				'Content-Type': 'application/json',
-            	Authorization: `Bearer ${token}`,
+            	Authorization: `Bearer ${GetToken()}`,
 			},
 		})
 		history.push('/')							
@@ -141,7 +140,7 @@ function CreateTodo() {
 
 	return (
 		<div>
-			{token && token !== "" && token !== undefined ? (
+			{GetToken() !== localStorage.getItem("token") ? (
 				<div>
 					<Navbar />
 					{phaseReturns()}

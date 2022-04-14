@@ -1,20 +1,14 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch,Route,Link} from "react-router-dom";
 
-import LoginPage from './auth/login'
-import RegisterPage from './auth/register';
-import GetUser from './CRUD/getUsersComponent';
-import CreateTodo from './CRUD/createTodo';
-import GetUserTodos from './CRUD/showAll';
+import {LoginPage} from './AUTH/login'
+import {RegisterPage} from './AUTH/register'
+import {GetUser} from './CRUD/getUsersComponent'
+import {CreateTodo} from './CRUD/createTodo'
+import {GetUserTodos} from './CRUD/showAll'
 
 
 function Homepage (){
-    let Login = <LoginPage />
-    let Register = <RegisterPage />
-    let GettingUsers = <GetUser />
-    let CrudRoute = <CreateTodo />
-    let Todos = <GetUserTodos />
-
     return (
         <div>
             <Router>
@@ -23,30 +17,16 @@ function Homepage (){
                 <Link to="/register"></Link>
                 <Link to="/users"></Link>
                 <Link to="/crudRoute"></Link>
-
                 <Switch>
-                    <Route path="/todo">
-                        {Todos}
-                    </Route>
-                    <Route path="/crudRoute">
-                        {CrudRoute}
-                    </Route>
-                    <Route path="/login">
-                        {Login}
-                    </Route>
-                    <Route path="/register">
-                        {Register}
-                    </Route>
-                    <Route path="/users">
-                        {GettingUsers}
-                    </Route>
-                    <Route path="/crudRoute">
-                        {CrudRoute}
-                    </Route>
+                    <Route exact path="/login" component={LoginPage}/>
+                    <Route exact path="/register" component={RegisterPage}/>
+                    <Route exact path="/users" component={GetUser}/>
+                    <Route exact path="/crudRoute" component={CreateTodo}/>
+                    <Route exact path="/todo" component={GetUserTodos}/>
                 </Switch>
             </Router>
         </div>
-    )
+    );
 }
 
 function App() {

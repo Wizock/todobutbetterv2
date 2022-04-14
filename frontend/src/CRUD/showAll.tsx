@@ -1,4 +1,4 @@
-import { compose } from "@mui/system";
+import { color, compose, minWidth } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -9,62 +9,72 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { createTheme } from "@mui/material/styles";
 import Navbar from "./navbarComponent";
-import token from "../tokenFetcher";
-const axios = require("axios");
+import { GetToken } from "../tokenFetcher";
+import axios from 'axios'
+import { error } from "console";
 
-const editData = (id) => {
-    console.log(id);
-    axios({
-        method: "POST",
-        url: `/crud/task/edit/${id}`,
-        mode: "cors",
-        cache: "force-cache",
-        credentials: "same-origin",
-        "Access-Control-Allow-Origin": "*", // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        },
-    })
+
+
+// const editData = (id) => {
+//     console.log(id);
+//     axios({
+//         method: "POST",
+//         url: `/crud/task/edit/${id}`,
+//         mode: "cors",
+//         cache: "force-cache",
+//         credentials: "same-origin",
+//         "Access-Control-Allow-Origin": "*", // include, *same-origin, omit
+//         headers: {
+//             'Content-Type': 'application/json',
+//             Authorization: `Bearer ${GetToken()}`,
+//         },
+//     })
+// };
+
+// const deleteData = (id) => {
+//     console.log(id);
+//     axios({
+//         method: "POST",
+//         url: `/crud/task/delete/${id}`,
+//         mode: "cors",
+//         cache: "force-cache",
+//         credentials: "same-origin",
+//         "Access-Control-Allow-Origin": "*", // include, *same-origin, omit
+//         headers: {
+//             'Content-Type': 'application/json',
+//             Authorization: `Bearer ${GetToken()}`,
+//         },
+//     })
+// };
+
+type TodoDataInterface = {
+	id: number;
+	title: string;
+	description: string;
+	completed: boolean;
+	createdAt: string;
+	updatedAt: string;
+	userId: number;
 };
 
-const deleteData = (id) => {
-    console.log(id);
-    axios({
-        method: "POST",
-        url: `/crud/task/delete/${id}`,
-        mode: "cors",
-        cache: "force-cache",
-        credentials: "same-origin",
-        "Access-Control-Allow-Origin": "*", // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        },
-    })
+type GetTodoResponse = {
+	data: TodoDataInterface[];
 };
-
 
 async function GetUserTodos() {
 	const [todoQueries, setTodoQueries] = useState([]);
-	await useEffect(() => {
-		axios({
-			method: "GET",
-			url: "/crud/task/show",
-			mode: "cors",
-			cache: "force-cache", // *default, no-cache, reload, force-cache, only-if-cached
-			credentials: "same-origin",
-			"Access-Control-Allow-Origin": "*", // include, *same-origin, omit
+	useEffect(() => {
+		axios.get(`/crud/task/get`, {
 			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
+				Accept: "application/json",
+				Authorization: `Bearer ${GetToken()}`,
 			},
-		}).then((response) => {
+		}).then((response: GetTodoResponse) => {
 			setTodoQueries(response.data);
+		}).catch((error) => {
+			console.log(error);
 		});
 	}, []);
-
-
 	let styles = {
 		background: {
 			backgroundColor: "#22273d",
@@ -96,7 +106,15 @@ async function GetUserTodos() {
 	return (
 		<div style={styles.background}>
 			<div>
-				<div style={styles.main}>
+				<div style={{
+			marginLeft: "10px",
+			marginRight: "10px",
+			maxHeight: "85vh",
+			display: "flex",
+			flexDirection: "column",
+			flexWrap: "wrap",
+			justifyContent: " start",
+		}}>
 					{todoQueries.map((todoQuery) => (
 						<div id={todoQuery.id} key={todoQuery.id}>
                             
@@ -112,7 +130,7 @@ async function GetUserTodos() {
 										{todoQuery.description}
 									</Typography>
 									<Typography variant="body2">
-                                    <Button onClick={(e) => deleteData(todoQuery.id)} size="small">Delete</Button>
+                                    <Button onClick={(_e) => deleteData(todoQuery.id)} size="small">Delete</Button>
 									</Typography>
 								</CardContent>
 							</Card>
@@ -130,17 +148,14 @@ function MainPage() {
 
     return (
         <div>
-            {token !== localStorage.getItem("token") ? (
-				
-                history.push("/login")
-			) : (
-                <div>
-                <Navbar />
-
-                <GetUserTodos />
-                </div>
-                )
-            }
+            {GetToken() ? (
+					history.push("/login")
+				) : (
+					<div>
+						<Navbar />
+						{GetUserTodos}
+					</div>
+                )}
         </div>
     );
 }
@@ -149,10 +164,16 @@ export default MainPage;
 
 
 
+// eslint-disable-next-line no-lone-blocks
 {/* <div>
     <p> {todoQuery.startingDateValue}</p>
     <p> {todoQuery.dueTimeValue}</p>
     <p> {todoQuery.priority}</p>
     <p> {todoQuery.taskOwner}</p>
 </div> */}
+
+
+			function deleteData(id: any): void {
+				throw new Error("Function not implemented.");
+			}
 

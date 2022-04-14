@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import token from "../tokenFetcher"
-const axios = require("axios");
-
+import axios from "axios";
+import { GetToken } from "../tokenFetcher";
+/* eslint @typescript-eslint/no-var-requires: "off" */
 function Tlogin() {
-	const [username, setUsername] = useState(0);
-	const [password, setPassword] = useState(0);
-	const [token, setToken] = useState([]);
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [token, setToken] = useState("");
 	const history = useHistory();
 
 	const handleSubmit = () => {
@@ -34,7 +34,7 @@ function Tlogin() {
 	};
 	return (
 		<div>
-			{token === localStorage.getItem("token") ? (
+			{GetToken() === localStorage.getItem("token") ? (
 				<div>
 					<h1>You are logged in</h1>
 					<h2>{token}</h2>
@@ -169,14 +169,10 @@ function Tlogin() {
 														type="submit"
 														onClick={() => {
 															setUsername(
-																document.getElementById(
-																	"username"
-																).value
+																(document.getElementById("username") as HTMLInputElement).value
 															);
 															setPassword(
-																document.getElementById(
-																	"password"
-																).value
+																(document.getElementById("password") as HTMLInputElement).value
 															);
 														}}>
 														Sign In

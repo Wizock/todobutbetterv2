@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 const axios = require("axios");
 
-function postRegister(email,username, password,firstname,lastname){
+function postRegister(email,username, password){
     
     console.log(`you posted with ${username} ${password} `)
     return axios(
@@ -27,12 +27,18 @@ function postRegister(email,username, password,firstname,lastname){
 }
 
 function TReg() {
-    const [username, setUsername] = useState(0);
-    const [password, setPassword] = useState(0);
-    const [email, setEmail] = useState(0);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
     const history = useHistory();
     
-    const handleSubmit = () => { postRegister(email.toString(),username.toString(), password.toString()); history.push('/login')}
+    const handleSubmit = () => {
+         postRegister(
+             email.toString(),
+             username.toString(), 
+             password.toString(),
+             ); 
+             history.push('/login')}
     
     return (
         <div>
@@ -87,7 +93,20 @@ function TReg() {
                                                 </label>
                                             </div>
                                             <div className="text-center mt-6">
-                                                <button className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full" style={{ transition: "all .15s ease", }} type="submit" onClick={() => { setEmail(document.getElementById('email').value); setUsername(document.getElementById('username').value); setPassword(document.getElementById('password').value);}}>Register</button>
+                                                <button className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full" 
+                                                style={{ transition: "all .15s ease", }} 
+                                                type="submit" 
+                                                onClick={() => { 
+                                                        setEmail(
+                                                            (document.getElementById('email') as HTMLInputElement).value
+                                                            ); 
+                                                        setUsername(
+                                                            (document.getElementById('username') as HTMLInputElement).value
+                                                        );
+
+                                                        setPassword(
+                                                            (document.getElementById('password') as HTMLInputElement).value
+                                                        )}}>Register</button>
                                             </div>
                                         </form>
                                     </div>
