@@ -1,14 +1,16 @@
-## Quick-Start:
+## Quick-Start ( for development ):
 Frontend Setup:
 ```batch
 npm install
 cd frontend
 npm install
+start-front
 ```
 Backend Setup: 
 ```batch
 pip install poetry
 poetry install
+start-back
 ```
 
 ## Welcome to todobutbetter version 2.0
